@@ -1,17 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import logo from "../../images/logo.svg";
+import { useEffect } from "react";
 export default function Home() {
-  return (
+  const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
+  const [currentUsers, setCurrentUsers] = useState("");
+  const [isLoading, setIsLoadding] = useState(true);
+
+  useEffect(() => {
+    fetch("https://63cf09718a780ae6e6710dbe.mockapi.io/users")
+      .then((response) => response.json())
+      .then((data) => {
+        setUsers(data);
+        setIsLoadding(false);
+      });
+  }, []);
+
+  return isLoading ? (
+    <h1>Loading...</h1>
+  ) : (
     <div className="home center">
       <div className="home__logo">
         <img src={logo} className="responsive" alt="" />
       </div>
-      <select className="home__select-users">
-        <option>User 1</option>
-        <option>User 2</option>
-        <option>User 3</option>
+      <select
+        onChange={(event) => setCurrentUsers(event.target.value)}
+        className="home__select-users"
+      >
+        <option value="">Selecione um usuário</option>
+        {users
+
+          .sort((a, b) => a.fn.localeCompare(b.fn))
+          .map((user) => (
+            <option value={user.id} key={user.id}>
+              {user.fn} {user.ln}
+            </option>
+          ))}
       </select>
-      <button className="button-primary">Entrar</button>
+      {!!currentUsers && (
+        <button
+          onClick={() => navigate(`/users/${currentUsers}`)}
+          className="button-primary"
+        >
+          Entrar
+        </button>
+      )}
     </div>
   );
 }
