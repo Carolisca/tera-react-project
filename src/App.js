@@ -13,13 +13,13 @@ import "./styles/main.css";
 
 function App() {
   return (
-  <BrowserRouter>
-  <Routes>
-<Route path="/" element={<Home />}/>
-<Route path= "/users" element={<Users />}/>
-<Route path= "/users/:userId" element={<UserBlog />}/>
-<Route path= "/users/:userId/post" element={<UserPostForm />}/>
-  </Routes>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/users/:userId" element={<UserBlog />} />
+        <Route path="/users/:userId/post" element={<UserPostForm />} />
+      </Routes>
     </BrowserRouter>);
 }
 
